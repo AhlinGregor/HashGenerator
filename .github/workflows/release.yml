@@ -69,7 +69,9 @@ jobs:
             --dest dist `
             --name HashGenerator `
             --app-version $appversion `
-            --jlink-options "--strip-debug --no-header-files --no-man-pages"
+            --jlink-options "--strip-debug --no-header-files --no-man-pages" `
+            --win-menu `
+            --win-shortcut
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
