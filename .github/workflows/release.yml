@@ -69,7 +69,7 @@ jobs:
             --dest dist `
             --name HashGenerator `
             --app-version $appversion `
-            --runtime-image $JAVA_HOME
+            --jlink-options "--strip-debug --no-header-files --no-man-pages"
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
