@@ -31,7 +31,7 @@ jobs:
             --main-jar HashGenerator-1.0-SNAPSHOT.jar \
             --dest dist \
             --name HashGenerator \
-            --app-version ${GITHUB_REF#refs/tags/} \
+            --app-version ${GITHUB_REF#refs/tags/v} \
             --runtime-image $JAVA_HOME
 
       - name: Upload DMG
@@ -67,8 +67,8 @@ jobs:
             --main-jar HashGenerator-1.0-SNAPSHOT.jar `
             --dest dist `
             --name HashGenerator `
-            --app-version ${env:GITHUB_REF -replace 'refs/tags/',''} `
-            --runtime-image $JAVA_HOME
+            --runtime-image $JAVA_HOME `
+            --app-version ${env:GITHUB_REF -replace 'refs/tags/v',''}
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
@@ -86,7 +86,9 @@ jobs:
       - name: Install tools
         run: |
           sudo apt update
-          sudo apt install -y libfuse2 appimagetool
+          sudo apt install -y libfuse2 wget
+          wget -O appimagetool https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool
 
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -106,7 +108,7 @@ jobs:
             --main-jar HashGenerator-1.0-SNAPSHOT.jar \
             --dest dist \
             --name HashGenerator \
-            --app-version ${GITHUB_REF#refs/tags/} \
+            --app-version ${GITHUB_REF#refs/tags/v} \
             --runtime-image $JAVA_HOME
 
       - name: Build AppDir
@@ -123,7 +125,7 @@ jobs:
 
       - name: Build AppImage
         run: |
-          appimagetool AppDir dist/HashGenerator-${GITHUB_REF#refs/tags/}.AppImage
+          ./appimagetool AppDir dist/HashGenerator-${GITHUB_REF#refs/tags/}.AppImage
 
       - name: Upload Linux installers
         uses: actions/upload-artifact@v4
