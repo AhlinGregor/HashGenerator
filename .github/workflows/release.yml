@@ -61,13 +61,14 @@ jobs:
       - name: Create Windows EXE Installer
         shell: powershell
         run: |
+          $appversion = "${env:GITHUB_REF}" -replace 'refs/tags/v',''
           jpackage `
             --type exe `
             --input target `
             --main-jar HashGenerator-1.0-SNAPSHOT.jar `
             --dest dist `
             --name HashGenerator `
-            --app-version ${env:GITHUB_REF -replace 'refs/tags/v',''} `
+            --app-version $appversion `
             --runtime-image $JAVA_HOME
 
       - name: Upload EXE
@@ -124,7 +125,7 @@ jobs:
 
       - name: Build AppImage
         run: |
-          ./appimagetool AppDir dist/HashGenerator-${GITHUB_REF#refs/tags/}.AppImage
+          ARCH=x86_64 ./appimagetool AppDir dist/HashGenerator-${GITHUB_REF#refs/tags/v}.AppImage
 
       - name: Upload Linux installers
         uses: actions/upload-artifact@v4
