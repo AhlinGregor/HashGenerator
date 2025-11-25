@@ -115,11 +115,12 @@ jobs:
         run: |
           mkdir -p AppDir/usr/bin
           cp target/HashGenerator-1.0-SNAPSHOT.jar AppDir/usr/bin/
+          cp lockLow.png AppDir/
           echo '[Desktop Entry]
           Type=Application
           Name=HashGenerator
           Exec=java -jar usr/bin/HashGenerator-1.0-SNAPSHOT.jar
-          Icon=application-default-icon
+          Icon=lockLow
           Categories=Utility;' > AppDir/HashGenerator.desktop
           chmod +x AppDir/HashGenerator.desktop
 
