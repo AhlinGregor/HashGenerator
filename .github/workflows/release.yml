@@ -67,8 +67,8 @@ jobs:
             --main-jar HashGenerator-1.0-SNAPSHOT.jar `
             --dest dist `
             --name HashGenerator `
-            --runtime-image $JAVA_HOME `
-            --app-version ${env:GITHUB_REF -replace 'refs/tags/v',''}
+            --app-version ${env:GITHUB_REF -replace 'refs/tags/v',''} `
+            --runtime-image $JAVA_HOME
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
@@ -108,8 +108,7 @@ jobs:
             --main-jar HashGenerator-1.0-SNAPSHOT.jar \
             --dest dist \
             --name HashGenerator \
-            --app-version ${GITHUB_REF#refs/tags/v} \
-            --runtime-image $JAVA_HOME
+            --app-version ${GITHUB_REF#refs/tags/v}
 
       - name: Build AppDir
         run: |
